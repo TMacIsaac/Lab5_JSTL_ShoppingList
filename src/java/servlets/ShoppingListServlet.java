@@ -67,12 +67,18 @@ public class ShoppingListServlet extends HttpServlet {
             }
             else if(action.equals("delete")){
                 String toDelete = request.getParameter("itemRadio");
+                if(toDelete == null || toDelete.equals("")){
+                 getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);  
+                 return;
+                }
                 int index = list.indexOf(toDelete);
                 if(index > -1){
                     list.remove(index);
+                    
                     session.setAttribute("list", list);
+                getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response); 
                 
-                getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+                
                 }
             }
         }
